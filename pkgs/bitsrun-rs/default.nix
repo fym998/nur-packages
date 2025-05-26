@@ -35,6 +35,6 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/spencerwooo/bitsrun-rs";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ ];
-    mainProgram = "bitsrun-rs";
+    mainProgram = "bitsrun";
   };
 }
