@@ -23,7 +23,7 @@
 }:
 
 stdenv.mkDerivation (finalAttrs: {
-  pname = "libfprint-fpc";
+  pname = "libfprint-fpcmoh";
   version = "1.94.6";
 
   outputs = [ "out" "devdoc" ];
