@@ -5,7 +5,10 @@
 # Having pkgs default to <nixpkgs> is fine though, and it lets you use short
 # commands such as:
 #     nix-build -A mypackage
-{pkgs ? import <nixpkgs> {}}: {
+{pkgs ? import <nixpkgs> {}, pkgs-libfprint-1_94_6}:
+  let
+    libfprint-fpcmoh = pkgs-libfprint-1_94_6.callPackage ./pkgs/libfprint-fpcmoh {};
+  in{
   # The `lib`, `modules`, and `overlays` names are special
   lib = import ./lib {inherit pkgs;}; # functions
   modules = import ./modules; # NixOS modules
@@ -13,7 +16,8 @@
 
   example-package = pkgs.callPackage ./pkgs/example-package {};
   bitsrun-rs = pkgs.callPackage ./pkgs/bitsrun-rs {};
-  libfprint-fpcmoh = pkgs.callPackage ./pkgs/libfprint-fpcmoh {};
+  inherit libfprint-fpcmoh;
+  fprintd-fpcmoh = pkgs-libfprint-1_94_6.fprintd.override { inherit libfprint-fpcmoh; };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
