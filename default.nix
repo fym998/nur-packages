@@ -17,7 +17,7 @@
   example-package = pkgs.callPackage ./pkgs/example-package {};
   bitsrun-rs = pkgs.callPackage ./pkgs/bitsrun-rs {};
   inherit libfprint-fpcmoh;
-  fprintd-fpcmoh = pkgs-libfprint-1_94_6.fprintd.override { inherit libfprint-fpcmoh; };
+  fprintd-fpcmoh = pkgs-libfprint-1_94_6.fprintd.override { libfprint = libfprint-fpcmoh; };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
