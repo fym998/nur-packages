@@ -3,6 +3,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-libfprint-1_94_6.url = "github:nixos/nixpkgs/c1f26cac27c78942f0e61a1fff6cdc4a63f02960";
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
   };
   outputs = { self, nixpkgs, nixpkgs-libfprint-1_94_6 }:
     let
