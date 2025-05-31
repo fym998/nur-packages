@@ -15,7 +15,7 @@
   }
   // (
     if system == "x86_64-linux"
-    then {
+    then 
       let
         libfprint-fpcmoh = pkgs-libfprint-1_94_6.callPackage ./pkgs/libfprint-fpcmoh {};
         fprintd-fpcmoh = pkgs-libfprint-1_94_6.fprintd.override {
@@ -23,7 +23,6 @@
         };
       in {
         inherit libfprint-fpcmoh fprintd-fpcmoh;
-      };
-    }
+      }
     else {}
   )
