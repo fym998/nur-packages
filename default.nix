@@ -6,8 +6,8 @@
 # commands such as:
 #     nix-build -A mypackage
 {
-  pkgs ? import <nixpkgs> {},
-  pkgs-libfprint-1_94_6 ? builtins.fetchTree "github:NixOS/nixpkgs/c1f26cac27c78942f0e61a1fff6cdc4a63f02960",
+  pkgs,
+  pkgs-libfprint-1_94_6,
   system ? builtins.currentSystem,
 }: 
   {
