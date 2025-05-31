@@ -31,6 +31,7 @@
       } // packagesForx86_64Linux;
     in {
       inherit packages;
+      legacyPackages = packages;
     }
   );
 }
