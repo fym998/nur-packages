@@ -11,11 +11,6 @@
   system ? builtins.currentSystem,
 }: 
   {
-    # The `lib`, `modules`, and `overlays` names are special
-    lib = import ./lib {inherit pkgs;}; # functions
-    modules = import ./modules; # NixOS modules
-    overlays = import ./overlays; # nixpkgs overlays
-
     bitsrun-rs = pkgs.callPackage ./pkgs/bitsrun-rs {};
   }
   // (
