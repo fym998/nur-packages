@@ -16,7 +16,6 @@
     modules = import ./modules; # NixOS modules
     overlays = import ./overlays; # nixpkgs overlays
 
-    example-package = pkgs.callPackage ./pkgs/example-package {};
     bitsrun-rs = pkgs.callPackage ./pkgs/bitsrun-rs {};
   }
   // (
