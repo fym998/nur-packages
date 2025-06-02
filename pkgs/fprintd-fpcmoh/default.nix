@@ -5,7 +5,7 @@
       (finalAttrs: {
         pname = "fprintd-fpcmoh";
         version = "1.94.4";
-        src = fetchFromGitLab {
+        src = pkgs.fetchFromGitLab {
           domain = "gitlab.freedesktop.org";
           owner = "libfprint";
           repo = "fprintd";
