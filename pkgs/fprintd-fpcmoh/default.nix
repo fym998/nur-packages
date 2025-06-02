@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  libfprint-fpcmoh ? pkgs.callPackage ../libfprint-fpcmoh { },
+  ...
+}:
 let
   fprintd-1_94_4 = pkgs.fprintd.overrideAttrs (finalAttrs: {
     pname = "fprintd-fpcmoh";
@@ -12,4 +16,4 @@ let
     };
   });
 in
-fprintd-1_94_4.override { libfprint = pkgs.callPackage ../libfprint-fpcmoh { }; }
+fprintd-1_94_4.override { libfprint = libfprint-fpcmoh; }
