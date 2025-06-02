@@ -73,17 +73,17 @@
     },
     "nixpkgs-libfprint-1_94_6": {
       "locked": {
-        "lastModified": 1693582909,
-        "narHash": "sha256-XyVwTXqWD6TbX8U+xNoGTmx1ETK3ZiAeA++pws8h/3o=",
+        "lastModified": 1730616424,
+        "narHash": "sha256-5FMuorBuIyxxa+bIPPKSlqOuV0ISUQfzBjyujqOQjvg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c1f26cac27c78942f0e61a1fff6cdc4a63f02960",
+        "rev": "ec5881151cfe27e080d7a3e8f25672d83c0a1f44",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c1f26cac27c78942f0e61a1fff6cdc4a63f02960",
+        "rev": "ec5881151cfe27e080d7a3e8f25672d83c0a1f44",
         "type": "github"
       }
     },
