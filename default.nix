@@ -5,7 +5,9 @@
 # Having pkgs default to <nixpkgs> is fine though, and it lets you use short
 # commands such as:
 #     nix-build -A mypackage
-{ pkgs }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 {
   bitsrun-rs = pkgs.callPackage ./pkgs/bitsrun-rs { };
   libfprint-fpcmoh = pkgs.callPackage ./pkgs/libfprint-fpcmoh { };
