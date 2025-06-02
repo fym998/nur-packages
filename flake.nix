@@ -20,10 +20,12 @@
   nixConfig = {
     extra-substituters = [
       "https://pre-commit-hooks.cachix.org"
+      "https://fym998-nur.cachix.org"
     ];
 
     extra-trusted-public-keys = [
       "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
+      "fym998-nur.cachix.org-1:lWwztkEXGJsiJHh/5FbA2u95AxJu8/k4udgGqdFLhOU="
     ];
   };
 
