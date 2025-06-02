@@ -33,7 +33,6 @@ rustPlatform.buildRustPackage rec {
     description = "A headless login / logout CLI for gateway (10.0.0.55) at BIT, now in Rust. 北京理工大学 10.0.0.55 校园网登录登出的 Rust 实现";
     homepage = "https://github.com/spencerwooo/bitsrun-rs";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ fym998 ];
     mainProgram = "bitsrun";
   };
 }
