@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-libfprint-1_94_6.url = "github:nixos/nixpkgs/ec5881151cfe27e080d7a3e8f25672d83c0a1f44";
+    nixpkgs-libfprint-1_94_6.url = "github:nixos/nixpkgs/c1f26cac27c78942f0e61a1fff6cdc4a63f02960";
 
     flake-utils.url = "github:numtide/flake-utils";
     pre-commit-hooks = {
@@ -13,7 +13,9 @@
   };
 
   nixConfig = {
-    extra-substituters = [ "https://pre-commit-hooks.cachix.org" ];
+    extra-substituters = [
+      "https://pre-commit-hooks.cachix.org"
+    ];
 
     extra-trusted-public-keys = [
       "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
@@ -73,6 +75,7 @@
             buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
           };
         };
+
       }
     );
 }
