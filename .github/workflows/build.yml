@@ -9,7 +9,7 @@ on:
     # rebuild everyday at 2:51
     # TIP: Choose a random time here so not all repositories are build at once:
     # https://www.random.org/clock-times/?num=1&earliest=01%3A00&latest=08%3A00&interval=5&format=html&rnd=new
-    - cron:  '51 3 * * *'
+    - cron:  '25 4 * * *'
   workflow_dispatch:
 jobs:
   tests:
@@ -20,8 +20,8 @@ jobs:
         #
         # The repo name as used in
         # https://github.com/nix-community/NUR/blob/master/repos.json
-        # nurRepo:
-        #   - <YOUR_REPO_NAME>
+        nurRepo:
+          - <YOUR_REPO_NAME>
         # Set this to cache your build results in cachix for faster builds
         # in CI and for everyone who uses your cache.
         #
@@ -36,7 +36,6 @@ jobs:
           - fym998-nur
         nixPath:
           - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixpkgs-unstable.tar.gz
-          - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz
           - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-25.05.tar.gz
     runs-on: ubuntu-latest
     steps:
