@@ -5,7 +5,6 @@
   stdenv,
   darwin,
 }:
-
 rustPlatform.buildRustPackage rec {
   pname = "bitsrun-rs";
   version = "0.5.0";
