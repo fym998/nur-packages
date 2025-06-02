@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-libfprint-1_94_6.url = "github:nixos/nixpkgs/c1f26cac27c78942f0e61a1fff6cdc4a63f02960";
 
     flake-utils.url = "github:numtide/flake-utils";
     pre-commit-hooks = {
@@ -26,7 +25,6 @@
     {
       self,
       nixpkgs,
-      nixpkgs-libfprint-1_94_6,
       flake-utils,
       pre-commit-hooks,
     }:
@@ -34,29 +32,11 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        result = import ./default.nix {
-          inherit system pkgs;
-          pkgs-libfprint-1_94_6 =
-            if system == "x86_64-linux" then import nixpkgs-libfprint-1_94_6 { inherit system; } else null;
-        };
-        packagesForx86_64Linux =
-          if system == "x86_64-linux" then
-            let
-              libfprint-fpcmoh = result.libfprint-fpcmoh;
-              fprintd-fpcmoh = result.fprintd-fpcmoh;
-            in
-            {
-              inherit libfprint-fpcmoh fprintd-fpcmoh;
-            }
-          else
-            { };
-        packages = {
-          bitsrun-rs = result.bitsrun-rs;
-        } // packagesForx86_64Linux;
+        result = import ./default.nix { inherit system pkgs; };
       in
       {
-        inherit packages;
-        legacyPackages = packages;
+        legacyPackages = import ./default.nix { pkgs = import nixpkgs { inherit system; }; };
+        packages = nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system};
 
         formatter = pkgs.nixfmt-rfc-style;
 
@@ -75,7 +55,6 @@
             buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
           };
         };
-
       }
     );
 }

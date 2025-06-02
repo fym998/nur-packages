@@ -7,22 +7,10 @@
 #     nix-build -A mypackage
 {
   pkgs,
-  pkgs-libfprint-1_94_6,
   system ? builtins.currentSystem,
-}: 
-  {
-    bitsrun-rs = pkgs.callPackage ./pkgs/bitsrun-rs {};
-  }
-  // (
-    if system == "x86_64-linux"
-    then 
-      let
-        libfprint-fpcmoh = pkgs-libfprint-1_94_6.callPackage ./pkgs/libfprint-fpcmoh {};
-        fprintd-fpcmoh = pkgs-libfprint-1_94_6.fprintd.override {
-          libfprint = libfprint-fpcmoh;
-        };
-      in {
-        inherit libfprint-fpcmoh fprintd-fpcmoh;
-      }
-    else {}
-  )
+}:
+{
+  bitsrun-rs = pkgs.callPackage ./pkgs/bitsrun-rs { };
+  libfprint-fpcmoh = pkgs.callPackage ./pkgs/libfprint-fpcmoh { };
+  fprintd-fpcmoh = pkgs.callPackage ./pkgs/fprintd-fpcmoh { };
+}
