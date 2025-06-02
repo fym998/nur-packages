@@ -2,7 +2,7 @@
 {
   fprintd-fpcmoh =
     pkgs.fprintd.overrideAttrs
-      (finalAttrs: previousAttrs: {
+      (finalAttrs: {
         pname = "fprintd-fpcmoh";
         version = "1.94.4";
         src = pkgs.fetchFromGitLab {
