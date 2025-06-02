@@ -3,6 +3,7 @@
 #
 {
   pkgs,
+  lib,
   libfprint,
   gusb,
   pixman,
@@ -60,10 +61,13 @@ let
           install -Dm644 "${fpcbep}/FPC_driver_linux_libfprint/install_libfprint/lib/udev/rules.d/60-libfprint-2-device-fpc.rules" "$out/lib/udev/rules.d/60-libfprint-2-device-fpc.rules"
           substituteInPlace "$out/lib/udev/rules.d/70-libfprint-2.rules" --replace "/bin/sh" "${pkgs.runtimeShell}"
         '';
-      meta = previousAttrs.meta // {
-        description = "FPC MOH fingerprint reader support for libfprint";
-        platforms = [ "x86_64-linux" ];
-      };
+      meta =
+        previousAttrs.meta
+        // (with lib; {
+          description = "FPC MOH fingerprint reader support for libfprint";
+          platforms = [ "x86_64-linux" ];
+          license = licenses.unfreeRedistributableFirmware;
+        });
     }
   );
 in
