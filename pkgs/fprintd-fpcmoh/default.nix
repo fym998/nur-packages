@@ -1,10 +1,11 @@
 {
   pkgs,
+  fprintd,
   libfprint-fpcmoh ? pkgs.callPackage ../libfprint-fpcmoh { },
   ...
 }:
 let
-  fprintd-1_94_4 = pkgs.fprintd.overrideAttrs (finalAttrs: {
+  fprintd-1_94_4 = fprintd.overrideAttrs (finalAttrs: {
     pname = "fprintd-fpcmoh";
     version = "1.94.4";
     src = pkgs.fetchFromGitLab {
