@@ -5,13 +5,7 @@
   pkgs,
   lib,
   libfprint,
-  gusb,
-  pixman,
-  glib,
   nss,
-  cairo,
-  libgudev,
-  ...
 }:
 let
   fpcbep = pkgs.fetchzip {
@@ -42,14 +36,7 @@ let
           substituteInPlace meson.build \
             --replace "find_library('fpcbep', required: true)" "find_library('fpcbep', required: true, dirs: '$out/lib')"
         '';
-      buildInputs = [
-        gusb
-        pixman
-        glib
-        nss
-        cairo
-        libgudev
-      ];
+      buildInputs = previousAttrs.buildInputs or [ ] ++ [ nss ];
       preConfigure =
         (previousAttrs.preConfigure or "")
         + ''
@@ -61,13 +48,11 @@ let
           install -Dm644 "${fpcbep}/FPC_driver_linux_libfprint/install_libfprint/lib/udev/rules.d/60-libfprint-2-device-fpc.rules" "$out/lib/udev/rules.d/60-libfprint-2-device-fpc.rules"
           substituteInPlace "$out/lib/udev/rules.d/70-libfprint-2.rules" --replace "/bin/sh" "${pkgs.runtimeShell}"
         '';
-      meta =
-        previousAttrs.meta
-        // (with lib; {
-          description = "FPC MOH fingerprint reader support for libfprint";
-          platforms = [ "x86_64-linux" ];
-          license = licenses.unfreeRedistributableFirmware;
-        });
+      meta = previousAttrs.meta // {
+        description = "libfprint with proprietary FPC match on host device 10a5:9800 driver";
+        platforms = [ "x86_64-linux" ];
+        license = lib.licenses.unfreeRedistributableFirmware;
+      };
     }
   );
 in
