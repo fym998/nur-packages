@@ -1,11 +1,7 @@
 {
   pkgs,
   fprintd,
-  libfprint-fpcmoh ? pkgs.callPackage ../libfprint-fpcmoh { },
-  ...
-}:
-let
-  fprintd-1_94_4 = fprintd.overrideAttrs (finalAttrs: {
+  fprintd-1_94_4 ? fprintd.overrideAttrs (finalAttrs: {
     pname = "fprintd-fpcmoh";
     version = "1.94.4";
     src = pkgs.fetchFromGitLab {
@@ -15,6 +11,7 @@ let
       rev = "v${finalAttrs.version}";
       sha256 = "sha256-B2g2d29jSER30OUqCkdk3+Hv5T3DA4SUKoyiqHb8FeU=";
     };
-  });
-in
+  }),
+  libfprint-fpcmoh ? pkgs.callPackage ../libfprint-fpcmoh { },
+}:
 fprintd-1_94_4.override { libfprint = libfprint-fpcmoh; }
