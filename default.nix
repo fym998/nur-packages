@@ -7,9 +7,20 @@
 #     nix-build -A mypackage
 {
   pkgs ? import <nixpkgs> { },
+  lib ? pkgs.lib,
 }:
-{
-  bitsrun-rs = pkgs.callPackage ./pkgs/bitsrun-rs { };
-  libfprint-fpcmoh = pkgs.callPackage ./pkgs/libfprint-fpcmoh { };
-  fprintd-fpcmoh = pkgs.callPackage ./pkgs/fprintd-fpcmoh { };
-}
+let
+  # 读取 pkgs 目录下的所有子目录
+  packagesDir = ./pkgs;
+  packageNames = lib.attrNames (builtins.readDir packagesDir);
+
+  # 为每个子目录创建对应的 callPackage 调用
+  mkPackage = name: {
+    inherit name;
+    value = pkgs.callPackage (packagesDir + "/${name}") { };
+  };
+
+  # 生成属性集
+  packages = builtins.listToAttrs (map mkPackage packageNames);
+in
+packages
