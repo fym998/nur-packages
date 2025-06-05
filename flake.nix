@@ -51,7 +51,7 @@
 
       in
       {
-        legacyPackages = import ./default.nix { pkgs = import nixpkgs { inherit system; }; };
+        legacyPackages = import ./default.nix { inherit pkgs system; };
         packages = nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system};
 
         formatter = treefmtEval.${system}.config.build.wrapper;

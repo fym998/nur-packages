@@ -8,6 +8,7 @@
 {
   pkgs ? import <nixpkgs> { },
   lib ? pkgs.lib,
+  ...
 }:
 let
   # 读取 pkgs 目录下的所有子目录
