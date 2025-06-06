@@ -8,10 +8,10 @@ wpsoffice-cn.overrideAttrs (previousAttrs: {
     + ''
       for exe in $out/bin/*;do
         wrapProgram $exe \
-          --prefix XMODIFIERS : \"@im=fcitx\"
-          --prefix GTK_IM_MODULE : \"fcitx\"
-          --prefix QT_IM_MODULE : \"fcitx\"
-          --prefix SDL_IM_MODULE : fcitx
+          --prefix XMODIFIERS : \"@im=fcitx\"\
+          --prefix GTK_IM_MODULE : \"fcitx\"\
+          --prefix QT_IM_MODULE : \"fcitx\"\
+          --prefix SDL_IM_MODULE : fcitx\
           --prefix GLFW_IM_MODULE : ibus
       done
     '';
