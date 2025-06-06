@@ -44,8 +44,7 @@
 
         result = import ./default.nix { inherit pkgs system; };
 
-        # Eval the treefmt modules from ./treefmt.nix
-        treefmtEval.${system} = treefmt-nix.lib.evalModule pkgs {
+        treefmtEval = treefmt-nix.lib.evalModule pkgs {
           projectRootFile = "flake.nix";
           programs.nixfmt.enable = true;
           programs.deadnix.enable = true;
@@ -56,7 +55,7 @@
         legacyPackages = result.packages;
         packages = result.packages;
 
-        formatter = treefmtEval.${system}.config.build.wrapper;
+        formatter = treefmtEval.config.build.wrapper;
 
         checks = {
           pre-commit-check = pre-commit-hooks.lib.${system}.run {
