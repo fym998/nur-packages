@@ -21,7 +21,7 @@ hmclWithJdk.overrideAttrs (
 
     desktopItems = previousAttrs.desktopItems or [ ] ++ [
       (makeDesktopItem {
-        name = "HMCL Multi-JDK";
+        name = "hmcl-multi-jdk";
         exec = "hmcl-multi-jdk";
         icon = "hmcl";
         comment = finalAttrs.meta.description;
