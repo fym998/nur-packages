@@ -53,6 +53,7 @@ libfprint.overrideAttrs (
       description = "libfprint with proprietary FPC match on host device 10a5:9800 driver";
       platforms = [ "x86_64-linux" ];
       license = lib.licenses.unfreeRedistributableFirmware;
+      sourceProvenance = with lib.sourceTypes; [ binaryFirmware ];
     };
   }
 )
