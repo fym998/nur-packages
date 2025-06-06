@@ -1,10 +1,12 @@
 {
   lib,
   hmcl,
+  jdk,
   jdk17,
   jdk21,
-  hmclJdk ? jdk17,
+  hmclJdk ? jdk,
   jdks ? [
+    jdk
     jdk17
     jdk21
   ],
