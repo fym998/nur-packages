@@ -44,6 +44,7 @@ hmclWithJdk.overrideAttrs (
 
     meta = hmcl.meta // {
       mainProgram = "hmcl-multi-jdk";
+      description = "HMCL with multiple JDK support";
     };
   }
 )
