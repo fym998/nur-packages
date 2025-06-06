@@ -42,6 +42,8 @@
       let
         pkgs = import nixpkgs { inherit system; };
 
+        result = import ./default.nix { inherit pkgs system; };
+
         # Eval the treefmt modules from ./treefmt.nix
         treefmtEval.${system} = treefmt-nix.lib.evalModule pkgs {
           projectRootFile = "flake.nix";
@@ -51,8 +53,8 @@
 
       in
       {
-        legacyPackages = import ./default.nix { inherit pkgs system; };
-        packages = nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system};
+        legacyPackages = result.packages;
+        packages = result.packages;
 
         formatter = treefmtEval.${system}.config.build.wrapper;
 
