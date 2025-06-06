@@ -2,7 +2,8 @@
   wpsoffice-cn,
 }:
 wpsoffice-cn.overrideAttrs (previousAttrs: {
-  pname = "wpsoffice-cn-custom";
+  pname = "wpsoffice-cn-fcitx";
+  description = "WPS Office CN with Fcitx support";
   postInstall =
     (previousAttrs.postInstall or "")
     + ''
