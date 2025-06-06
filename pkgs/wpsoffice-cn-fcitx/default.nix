@@ -14,6 +14,5 @@ wpsoffice-cn.overrideAttrs (previousAttrs: {
     '';
   meta = previousAttrs.meta // {
     description = "WPS Office CN with Fcitx support";
-    license = with previousAttrs.meta.license; [ free ];
   };
 })
