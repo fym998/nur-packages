@@ -12,4 +12,8 @@ wpsoffice-cn.overrideAttrs (previousAttrs: {
           --replace Exec= "Exec=env XMODIFIERS=\"@im=fcitx\" GTK_IM_MODULE=\"fcitx\" QT_IM_MODULE=\"fcitx\" SDL_IM_MODULE=fcitx GLFW_IM_MODULE=ibus "
       done
     '';
+  meta = previousAttrs.meta // {
+    description = "WPS Office CN with Fcitx support";
+    license = with previousAttrs.meta.license; [ free ];
+  };
 })
