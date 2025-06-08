@@ -4,20 +4,16 @@
   jdk,
   jdk17,
   jdk21,
-  hmclJdk ? jdk,
   jdks ? [
     jdk
     jdk17
     jdk21
   ],
-  hmclWithJdk ? hmcl.override {
-    jre = hmclJdk;
-  },
   makeWrapper,
   makeDesktopItem,
   copyDesktopItems,
 }:
-hmclWithJdk.overrideAttrs (
+hmcl.overrideAttrs (
   finalAttrs: previousAttrs: {
     pname = "hmcl-multi-jdk";
 
