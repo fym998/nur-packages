@@ -17,7 +17,7 @@ hmcl.overrideAttrs (
   finalAttrs: previousAttrs: {
     pname = "hmcl-multi-jdk";
 
-    desktopItems = previousAttrs.desktopItems or [ ] ++ [
+    desktopItems = [
       (makeDesktopItem {
         name = "hmcl-multi-jdk";
         exec = "hmcl-multi-jdk";
