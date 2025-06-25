@@ -68,6 +68,7 @@
             ...
           }:
           {
+            packages = import ./pkgs { inherit pkgs lib; };
           };
       }
     );
