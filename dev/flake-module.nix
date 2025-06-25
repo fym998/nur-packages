@@ -13,7 +13,7 @@
       pre-commit = devPartitionName;
     };
   partitions.dev = {
-    extraInputsFlake = ./dev;
+    extraInputsFlake = ./.;
     module = {
       imports = [ ./partition-module.nix ];
     };
