@@ -4,11 +4,24 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     flake-utils.url = "github:numtide/flake-utils";
 
-    pre-commit-hooks = {
+    git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+    };
+
+    make-shell = {
+      url = "github:nicknovitski/make-shell";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     treefmt-nix = {
@@ -30,57 +43,69 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      flake-utils,
-      pre-commit-hooks,
-      treefmt-nix,
-    }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-
-        result = import ./default.nix { inherit pkgs system; };
-
-        treefmtEval = treefmt-nix.lib.evalModule pkgs {
-          projectRootFile = "flake.nix";
-          programs.nixfmt.enable = true;
-          programs.deadnix.enable = true;
-        };
-
-      in
+    inputs@{ flake-parts, ... }:
+    # https://flake.parts/module-arguments.html
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      top@{
+        config,
+        withSystem,
+        moduleWithSystem,
+        ...
+      }:
       {
-        legacyPackages = result.packages;
-        packages = result.packages;
-
-        formatter = treefmtEval.config.build.wrapper;
-
-        checks = {
-          pre-commit-check = pre-commit-hooks.lib.${system}.run {
-            src = ./.;
-            hooks = {
-              nixfmt-rfc-style.enable = true;
-              deadnix.enable = true;
+        debug = true;
+        imports = [
+          inputs.treefmt-nix.flakeModule
+          inputs.git-hooks-nix.flakeModule
+          inputs.make-shell.flakeModules.default
+        ];
+        flake = {
+          # Put your original flake attributes here.
+        };
+        systems = inputs.flake-utils.lib.defaultSystems;
+        perSystem =
+          {
+            config,
+            pkgs,
+            lib,
+            ...
+          }:
+          {
+            treefmt.programs = {
+              nixfmt.enable = true;
+              statix.enable = true;
+            };
+            pre-commit.settings.hooks.treefmt = {
+              enable = true;
+              packageOverrides.treefmt = config.treefmt.build.wrapper;
+            };
+            make-shells = {
+              default = {
+                imports =
+                  builtins.map
+                    (
+                      shellModule:
+                      builtins.intersectAttrs (lib.genAttrs [
+                        "buildInputs"
+                        "nativeBuildInputs"
+                        "propagatedBuildInputs"
+                        "propagatedNativeBuildInputs"
+                        "shellHook"
+                      ] (_: null)) shellModule
+                    )
+                    [
+                      config.treefmt.build.devShell
+                      config.pre-commit.devShell
+                    ];
+                nativeBuildInputs = builtins.attrValues {
+                  inherit (pkgs)
+                    nil
+                    nix-prefetch-git
+                    ;
+                };
+              };
             };
           };
-          # formatting = treefmtEval.${pkgs.system}.config.build.check self;
-        };
-
-        devShells = {
-          default = pkgs.mkShellNoCC {
-            inherit (self.checks.${system}.pre-commit-check) shellHook;
-            buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
-            packages = with pkgs; [
-              nil
-              nix-prefetch-git
-            ];
-          };
-        };
       }
     );
 }
