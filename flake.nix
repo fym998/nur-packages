@@ -56,7 +56,6 @@
           ./dev/flake-module.nix
         ];
         flake = {
-          overlay = self.overlays.default;
           overlays = import ./overlays;
         };
         systems = inputs.flake-utils.lib.defaultSystems;
