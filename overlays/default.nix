@@ -1,3 +1,3 @@
 {
-  default = ../overlay.nix;
+  default = import ../overlay.nix;
 }
