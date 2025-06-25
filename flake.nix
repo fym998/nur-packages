@@ -43,7 +43,7 @@
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
+    inputs@{ self, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       top@{
         config,
@@ -55,6 +55,10 @@
         imports = [
           ./dev/flake-module.nix
         ];
+        flake = {
+          overlay = self.overlays.default;
+          overlays = import ./overlays;
+        };
         systems = inputs.flake-utils.lib.defaultSystems;
         perSystem =
           {
