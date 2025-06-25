@@ -13,10 +13,6 @@
       flake = false;
     };
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    flake-utils.url = "github:numtide/flake-utils";
-
     git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
