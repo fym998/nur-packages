@@ -8,9 +8,9 @@
       devPartitionName = "dev";
     in
     {
-      make-shells = devPartitionName;
-      treefmt = devPartitionName;
-      pre-commit = devPartitionName;
+      devShells = devPartitionName;
+      checks = devPartitionName;
+      formatter = devPartitionName;
     };
   partitions.dev = {
     extraInputsFlake = ./.;
