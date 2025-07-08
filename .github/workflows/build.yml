@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - master
   schedule:
     - cron:  '25 4 * * 6' # Every Saturday at 04:25 UTC
   workflow_dispatch:
