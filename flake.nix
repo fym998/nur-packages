@@ -6,7 +6,7 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    flake-utils.url = "github:numtide/flake-utils";
+    systems.url = "github:nix-systems/default-linux";
   };
 
   nixConfig = {
@@ -37,7 +37,7 @@
         flake = {
           overlays = import ./overlays;
         };
-        systems = inputs.flake-utils.lib.defaultSystems;
+        systems = import inputs.systems;
         perSystem =
           {
             config,
