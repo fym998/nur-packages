@@ -59,7 +59,7 @@ jobs:
       - name: Check evaluation
         run: nix eval ".#checks.$(nix eval --raw --impure --expr builtins.currentSystem)" --json
 
-      - name: Build nix packages and populate cache
+      - name: Build and cache packages
         env:
           CACHIX_AUTH_TOKEN: "${{ secrets.CACHIX_AUTH_TOKEN }}"
         run: |
