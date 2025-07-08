@@ -28,7 +28,7 @@
     inputs@{ self, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       top@{
-        config,
+        lib,
         withSystem,
         moduleWithSystem,
         ...
@@ -45,7 +45,6 @@
           {
             config,
             pkgs,
-            lib,
             system,
             ...
           }:
