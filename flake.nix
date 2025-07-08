@@ -52,7 +52,10 @@
           {
             _module.args.pkgs = import inputs.nixpkgs {
               inherit system;
-              config.allowUnfree = true;
+              config = {
+                allowUnfree = true;
+                allowUnsupportedSystem = true;
+              };
             };
             packages = import ./pkgs { inherit pkgs; };
           };
