@@ -8,9 +8,11 @@
 #
 # then your CI will be able to build and cache only those packages for
 # which this is possible.
+
 {
   pkgs ? import <nixpkgs> { },
 }:
+
 with builtins;
 let
   isReserved = n: n == "lib" || n == "overlays" || n == "modules";
@@ -55,6 +57,7 @@ let
       map (n: nameValuePair n nurAttrs.${n}) (filter (n: !isReserved n) (attrNames nurAttrs))
     )
   );
+
 in
 rec {
   buildPkgs = filter isBuildable nurPkgs;
