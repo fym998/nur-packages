@@ -57,8 +57,8 @@
                 allowUnsupportedSystem = true;
               };
             };
-            packages = import ./pkgs { inherit pkgs; };
-          };
+          }
+          // import ./pkgs.nix { inherit pkgs; };
       }
     );
 }
