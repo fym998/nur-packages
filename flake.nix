@@ -43,7 +43,7 @@
         systems = import inputs.systems;
         perSystem =
           {
-            config,
+            self',
             pkgs,
             system,
             ...
@@ -56,6 +56,14 @@
                 allowUnsupportedSystem = true;
               };
             };
+
+            # for nix-fast-build
+            checks =
+              lib.mapAttrs' (name: value: lib.nameValuePair "package-${name}" value)
+                (import ./ci.nix {
+                  inherit pkgs;
+                  nurPkgs = self'.packages;
+                }).cachePackages;
           }
           // import ./pkgs.nix { inherit pkgs; };
       }
