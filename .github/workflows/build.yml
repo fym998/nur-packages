@@ -45,12 +45,13 @@ jobs:
     - name: Show flake attributes
       run: nix flake show --json
     - name: Check evaluation
-      run: nix eval .#checks --json
+      run: nix eval ".#checks.$(nix eval --raw --impure --expr builtins.currentSystem)" --json
     - name: Build nix packages and populate cache
       env:
         CACHIX_AUTH_TOKEN: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       run: |
         nix run nixpkgs#nix-fast-build -- \
+        --flake ".#checks.$(nix eval --raw --impure --expr builtins.currentSystem)" \
         --no-nom \
         --skip-cached \
         --cachix-cache ${{ matrix.cachixName }}
