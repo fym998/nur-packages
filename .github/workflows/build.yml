@@ -42,6 +42,8 @@ jobs:
           accept-flake-config = true
     - name: Show flake metadata
       run: nix flake metadata --json
+    - name: Show flake attributes
+      run: nix flake show --json
     - name: Check evaluation
       run: nix eval .#checks --json
     - name: Build nix packages and populate cache
