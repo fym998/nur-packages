@@ -49,7 +49,7 @@ jobs:
         id: eval
         run: |
           echo eval_result= >> $GITHUB_OUTPUT
-          nix eval .#checks --json | tee -a eval_result.json
+          nix eval .#checks --json | tee -a $GITHUB_OUTPUT
 
   check-eval-change:
     runs-on: ubuntu-latest
