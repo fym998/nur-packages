@@ -35,7 +35,7 @@
       }:
       {
         imports = [
-          ./dev/flake-module.nix
+          ./flake-modules/_internal/dev.nix
           ./flake-modules/_internal/ci.nix
         ];
         flake = {
