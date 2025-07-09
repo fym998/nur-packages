@@ -1,5 +1,8 @@
 name: "Install Nix"
 description: "Install Nix with custom configuration for binary cache and flake support."
+inputs:
+  github_access_token:
+    description: "Configure Nix to pull from GitHub using the given GitHub token."
 runs:
   using: "composite"
   steps:
@@ -7,7 +10,7 @@ runs:
       uses: cachix/install-nix-action@v31
       with:
         extra_nix_config: >
-          access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          access-tokens = github.com=${{ inputs.github_access_token }}
 
           accept-flake-config = true
 
