@@ -44,7 +44,7 @@ jobs:
         run: nix flake show --all-systems --json
 
       - name: Check evaluation
-        run: nix eval .#checks
+        run: nix eval .#checks --json
 
   build-and-cache-packages:
     needs: evaluate
