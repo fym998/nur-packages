@@ -49,7 +49,7 @@ jobs:
         id: eval
         run: |
           nix eval .#checks --json | tee eval_result.json
-          printf eval_result=; cat eval_result.json
+          printf eval_result=; cat eval_result.json > $GITHUB_OUTPUT
 
   check-eval-change:
     runs-on: ubuntu-latest
