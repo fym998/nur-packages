@@ -24,6 +24,8 @@ jobs:
 
       - name: Install Nix
         uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Show flake metadata
         run: nix flake metadata --json
@@ -93,6 +95,8 @@ jobs:
 
       - name: Install Nix
         uses: ./.github/actions/install-nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and cache packages
         env:
