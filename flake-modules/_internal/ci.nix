@@ -8,7 +8,7 @@ let
     name = "ciPackages";
     option = lib.mkOption {
       type = lib.types.lazyAttrsOf lib.types.package;
-      default = [ ];
+      default = { };
     };
     file = ./ci.nix;
   };
