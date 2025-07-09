@@ -11,6 +11,7 @@ on:
 
 env:
   cachixName: fym998-nur
+  nurRepo: fym998
 
 jobs:
   evaluate:
@@ -86,16 +87,7 @@ jobs:
   trigger-nur-update:
     needs: build-and-cache-packages
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # Set this to notify the global nur package registry that changes are
-        # available.
-        #
-        # The repo name as used in
-        # https://github.com/nix-community/NUR/blob/master/repos.json
-        nurRepo:
-          - fym998
     steps:
       - name: Trigger NUR update
-        if: ${{ matrix.nurRepo != '<YOUR_REPO_NAME>' }}
-        run: curl -XPOST "https://nur-update.nix-community.org/update?repo=${{ matrix.nurRepo }}"
+        if: ${{ env.nurRepo != '<YOUR_REPO_NAME>' }}
+        run: curl -XPOST "https://nur-update.nix-community.org/update?repo=${{ env.nurRepo }}"
