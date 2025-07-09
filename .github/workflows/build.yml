@@ -13,6 +13,38 @@ env:
   cachixName: fym998-nur
 
 jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            accept-flake-config = true
+            substituters = https://cache.nixos.org/
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+
+      - uses: cachix/cachix-action@v16
+        with:
+          name: ${{ env.cachixName }}
+          extraPullNames: pre-commit-hooks,nix-community
+
+      - name: Show nix info
+        run: nix --debug --version
+
+      - name: Show flake metadata
+        run: nix flake metadata --json
+
+      - name: Show flake attributes
+        run: nix flake show --all-systems --json
+
+      - name: Check evaluation
+        run: nix eval .#checks
+
   build-and-cache-packages:
     strategy:
       matrix:
@@ -40,15 +72,6 @@ jobs:
 
       - name: Show nix info
         run: nix --debug --version
-
-      - name: Show flake metadata
-        run: nix flake metadata --json
-
-      - name: Show flake attributes
-        run: nix flake show --json
-
-      - name: Check evaluation
-        run: nix eval ".#checks.$(nix eval --raw --impure --expr builtins.currentSystem)" --json
 
       - name: Build and cache packages
         env:
