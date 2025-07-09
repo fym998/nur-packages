@@ -9,22 +9,13 @@ on:
     - cron: "25 4 * * 6" # Every Saturday at 04:25 UTC
   workflow_dispatch:
 
+env:
+  cachixName: fym998-nur
+
 jobs:
   build-and-cache-packages:
     strategy:
       matrix:
-        # Set this to cache your build results in cachix for faster builds
-        # in CI and for everyone who uses your cache.
-        #
-        # Format: Your cachix cache host name without the ".cachix.org" suffix.
-        # Example: mycache (for mycache.cachix.org)
-        #
-        # For this to work, you also need to set the CACHIX_SIGNING_KEY or
-        # CACHIX_AUTH_TOKEN secret in your repository secrets settings in
-        # Github found at
-        # https://github.com/<your_githubname>/nur-packages/settings/secrets
-        cachixName:
-          - fym998-nur
         runner:
           - ubuntu-latest
           - ubuntu-24.04-arm
@@ -44,7 +35,7 @@ jobs:
 
       - uses: cachix/cachix-action@v16
         with:
-          name: ${{ matrix.cachixName }}
+          name: ${{ env.cachixName }}
           extraPullNames: pre-commit-hooks,nix-community
 
       - name: Show nix info
