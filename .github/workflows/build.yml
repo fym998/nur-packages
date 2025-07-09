@@ -81,7 +81,7 @@ jobs:
           --flake ".#checks.$(nix eval --raw --impure --expr builtins.currentSystem)" \
           --no-nom \
           --skip-cached \
-          --cachix-cache ${{ matrix.cachixName }}
+          --cachix-cache ${{ env.cachixName }}
 
   trigger-nur-update:
     needs: build-and-cache-packages
