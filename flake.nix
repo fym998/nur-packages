@@ -36,6 +36,7 @@
       {
         imports = [
           ./dev/flake-module.nix
+          ./flake-modules/_internal/ci.nix
         ];
         flake = {
           overlays = import ./overlays;
@@ -57,14 +58,7 @@
               };
             };
 
-            # for nix-fast-build
-            checks =
-              lib.mapAttrs' (name: value: lib.nameValuePair "package-${name}" value)
-                (import ./ci.nix {
-                  inherit pkgs;
-                  nurPkgs = self'.packages;
-                  currentSystem = system;
-                }).cachePackages;
+            checks = lib.mapAttrs' (name: value: lib.nameValuePair "package-${name}" value) self'.packages;
           }
           // import ./pkgs.nix { inherit pkgs; };
       }
