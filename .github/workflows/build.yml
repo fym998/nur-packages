@@ -30,9 +30,6 @@ jobs:
       - name: Show flake metadata
         run: nix flake metadata --json
 
-      - name: Show flake attributes
-        run: nix flake show --all-systems --json
-
       - name: Evaluate
         id: eval
         run: |
