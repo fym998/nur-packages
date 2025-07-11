@@ -1,4 +1,4 @@
-name: "Build and populate cache"
+name: "Check, build and cache"
 
 on:
   pull_request:
