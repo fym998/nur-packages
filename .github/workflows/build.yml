@@ -48,7 +48,6 @@ jobs:
       should_build: ${{ steps.compare.outputs.changed }}
     steps:
       - name: Restore previous eval hash
-        id: cache_restore
         uses: actions/cache/restore@v4
         with:
           path: eval_hash.txt
