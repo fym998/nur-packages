@@ -7,10 +7,10 @@ let
   legacyPackages =
     lib.packagesFromDirectoryRecursive {
       inherit (pkgs) callPackage;
-      directory = ./pkgs;
+      directory = ./by-name;
     }
     // {
-      fprintd-fpcmoh = pkgs.callPackage ./pkgs/fprintd-fpcmoh/package.nix {
+      fprintd-fpcmoh = pkgs.callPackage ./by-name/fprintd-fpcmoh/package.nix {
         inherit (legacyPackages) libfprint-fpcmoh;
       };
     };
