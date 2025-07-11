@@ -54,6 +54,9 @@
               nix-prefetch-git
               nix-fast-build
               nix-eval-jobs
+
+              yaml2json
+              jq
               ;
           };
         };
