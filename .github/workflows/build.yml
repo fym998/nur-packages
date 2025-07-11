@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 env:
-  cachixName: fym998-nur
-  nurRepo: fym998
+  CACHIX_CACHE: fym998-nur
+  NUR_REPO: fym998
 
 jobs:
   check-and-evaluate:
@@ -109,12 +109,12 @@ jobs:
           --flake ".#ciPackages.$(nix eval --raw --impure --expr builtins.currentSystem)" \
           --no-nom \
           --skip-cached \
-          --cachix-cache ${{ env.cachixName }}
+          --cachix-cache ${{ env.CACHIX_CACHE }}
 
   trigger-nur-update:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Trigger NUR update
-        if: ${{ env.nurRepo != '<YOUR_REPO_NAME>' }}
-        run: curl -XPOST "https://nur-update.nix-community.org/update?repo=${{ env.nurRepo }}"
+        if: ${{ env.NUR_REPO != '<YOUR_REPO_NAME>' }}
+        run: curl -XPOST "https://nur-update.nix-community.org/update?repo=${{ env.NUR_REPO }}"
