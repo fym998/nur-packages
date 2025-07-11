@@ -37,7 +37,7 @@ jobs:
         id: eval
         run: |
           nix run nixpkgs#nix-eval-jobs -- --flake .#ciPackages --force-recurse | tee eval_output.txt
-          
+
           EVAL_HASH=$(sha256sum eval_output.txt | awk '{print $1}')
           echo "eval_hash=$EVAL_HASH" >> $GITHUB_OUTPUT
 
@@ -59,7 +59,7 @@ jobs:
         id: compare
         run: |
           CURRENT_HASH="${{ needs.check-and-evaluate.outputs.eval_hash }}"
-          
+
           if [ -f eval_hash.txt ]; then
             PREV_HASH=$(cat eval_hash.txt)
           else
