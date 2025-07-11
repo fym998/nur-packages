@@ -19,6 +19,7 @@
       treefmt.programs = {
         nixfmt.enable = true;
         statix.enable = true;
+        yamlfmt.enable = true;
       };
       pre-commit.settings.hooks.treefmt = {
         enable = true;
