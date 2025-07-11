@@ -4,11 +4,16 @@
   ...
 }:
 let
-  legacyPackages = lib.packagesFromDirectoryRecursive {
-    inherit (pkgs) callPackage newScope;
-    directory = ./pkgs;
-  };
-
+  legacyPackages =
+    lib.packagesFromDirectoryRecursive {
+      inherit (pkgs) callPackage;
+      directory = ./pkgs;
+    }
+    // {
+      fprintd-fpcmoh = pkgs.callPackage ./pkgs/fprintd-fpcmoh/package.nix {
+        inherit (legacyPackages) libfprint-fpcmoh;
+      };
+    };
 in
 {
   inherit legacyPackages;
