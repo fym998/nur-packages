@@ -47,6 +47,7 @@
               nil
               nix-prefetch-git
               nix-fast-build
+              nix-eval-jobs
               ;
           };
         };
