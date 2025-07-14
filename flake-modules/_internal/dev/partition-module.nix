@@ -16,14 +16,17 @@
       ...
     }:
     {
-      treefmt.programs = {
-        nixfmt.enable = true;
-        statix.enable = true;
-        yamlfmt = {
-          enable = true;
-          excludes = [ ".github/actions/install-nix/action.yml" ];
-          settings.formatter = {
-            retain_line_breaks = true;
+      treefmt = {
+        flakeCheck = false;
+        programs = {
+          nixfmt.enable = true;
+          statix.enable = true;
+          yamlfmt = {
+            enable = true;
+            excludes = [ ".github/actions/install-nix/action.yml" ];
+            settings.formatter = {
+              retain_line_breaks = true;
+            };
           };
         };
       };
