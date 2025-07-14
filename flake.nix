@@ -36,14 +36,10 @@
       {
         imports = [
           ./flake-modules/_internal/dev.nix
-          ./flake-modules/ci.nix
+          ./flake-modules/_internal/ci.nix
           inputs.flake-parts.flakeModules.easyOverlay
-          inputs.flake-parts.flakeModules.flakeModules
         ];
         systems = import inputs.systems;
-        flake = {
-          flakeModules.ci = ./flake-modules/ci.nix;
-        };
         perSystem =
           {
             self',
