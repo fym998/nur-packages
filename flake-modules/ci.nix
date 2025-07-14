@@ -1,0 +1,71 @@
+{
+  self,
+  config,
+  lib,
+  flake-parts-lib,
+  ...
+}:
+let
+  inherit (lib)
+    filterAttrs
+    mapAttrs
+    mkOption
+    optionalAttrs
+    types
+    ;
+  inherit (flake-parts-lib)
+    mkSubmoduleOptions
+    mkPerSystemOption
+    ;
+in
+{
+  options = {
+    flake = mkSubmoduleOptions {
+      ciPackages = mkOption {
+        type = types.lazyAttrsOf (types.lazyAttrsOf types.package);
+        default = { };
+        description = ''
+          An attribute set of per system an attribute set packages to be built by CI.
+        '';
+      };
+    };
+
+    perSystem = mkPerSystemOption (
+      {
+        self',
+        system,
+        ...
+      }:
+      {
+        _file = ./ci.nix;
+        options = {
+          ciPackages = mkOption {
+            type = types.lazyAttrsOf types.package;
+            default = self'.packages;
+            description = ''
+              An attribute set of packages to be built by CI.
+            '';
+          };
+        };
+      }
+    );
+  };
+
+  config = {
+    flake.ciPackages = mapAttrs (
+      system: ciPackages:
+      let
+        isBuildable =
+          p:
+          let
+            licenseFromMeta = p.meta.license or [ ];
+            licenseList = if builtins.isList licenseFromMeta then licenseFromMeta else [ licenseFromMeta ];
+          in
+          !(p.meta.broken or false) && builtins.all (license: license.free or true) licenseList;
+        isCacheable = p: !(p.preferLocalBuild or false);
+        isSupported = p: lib.elem system (p.meta.platforms or [ ]);
+      in
+      lib.filterAttrs (name: p: isBuildable p && isCacheable p && isSupported p) ciPackages
+    ) (mapAttrs (system: perSystem: perSystem.ciPackages) config.allSystems);
+  };
+}

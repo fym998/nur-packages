@@ -36,10 +36,14 @@
       {
         imports = [
           ./flake-modules/_internal/dev.nix
-          ./flake-modules/_internal/ci.nix
+          ./flake-modules/ci.nix
           inputs.flake-parts.flakeModules.easyOverlay
+          inputs.flake-parts.flakeModules.flakeModules
         ];
         systems = import inputs.systems;
+        flake = {
+          flakeModules.ci = ./flake-modules/ci.nix;
+        };
         perSystem =
           {
             self',
@@ -56,6 +60,7 @@
               };
             };
             overlayAttrs = self'.legacyPackages;
+            ciPackages = lib.filterAttrs (name: p: !lib.hasPrefix "_" name) self'.packages;
           }
           // import ./pkgs { inherit pkgs; };
       }
