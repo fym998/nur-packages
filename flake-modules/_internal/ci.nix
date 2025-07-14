@@ -1,5 +1,4 @@
 {
-  self,
   config,
   lib,
   flake-parts-lib,
@@ -10,7 +9,6 @@ let
     filterAttrs
     mapAttrs
     mkOption
-    optionalAttrs
     types
     ;
   inherit (flake-parts-lib)
@@ -33,7 +31,6 @@ in
     perSystem = mkPerSystemOption (
       {
         self',
-        system,
         ...
       }:
       {
@@ -65,7 +62,7 @@ in
         isCacheable = p: !(p.preferLocalBuild or false);
         isSupported = p: lib.elem system (p.meta.platforms or [ ]);
       in
-      lib.filterAttrs (name: p: isBuildable p && isCacheable p && isSupported p) ciPackages
-    ) (mapAttrs (system: perSystem: perSystem.ciPackages) config.allSystems);
+      filterAttrs (_name: p: isBuildable p && isCacheable p && isSupported p) ciPackages
+    ) (mapAttrs (_system: perSystem: perSystem.ciPackages) config.allSystems);
   };
 }
