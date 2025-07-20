@@ -19,7 +19,7 @@ runs:
       with:
         path: |
           ~/.cache/nix
-        key: nix-cache-${{ hashFiles('flake.lock') }}
+        key: nix-cache-${{ hashFiles('**/flake.lock') }}
         restore-keys: |
           nix-cache-
 
