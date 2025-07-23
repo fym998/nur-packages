@@ -19,7 +19,6 @@
     }:
     {
       treefmt = {
-        flakeCheck = false;
         programs = {
           nixfmt.enable = true;
           deadnix.enable = true;
@@ -32,18 +31,21 @@
           };
         };
       };
-      pre-commit.settings.hooks = {
-        treefmt.enable = true;
-        files =
-          let
-            writerCfg = config.files.writer;
-            writerPkg = writerCfg.drv;
-          in
-          {
-            enable = true;
-            package = writerPkg;
-            entry = "${writerPkg}/bin/${writerCfg.exeFilename}";
-          };
+      pre-commit = {
+        check.enable = false;
+        settings.hooks = {
+          treefmt.enable = true;
+          files =
+            let
+              writerCfg = config.files.writer;
+              writerPkg = writerCfg.drv;
+            in
+            {
+              enable = true;
+              package = writerPkg;
+              entry = "${writerPkg}/bin/${writerCfg.exeFilename}";
+            };
+        };
       };
       make-shells = {
         default = {
