@@ -21,6 +21,7 @@
                 (nameMkContentPair "Name" (p: p.name))
                 (nameMkContentPair "Description" (p: p.meta.description))
                 (nameMkContentPair "Version" (p: p.version))
+                (nameMkContentPair "Homepage" (p: if p ? meta.homepage then "[Link](${p.meta.homepage})" else ""))
               ];
 
               mkTableRow =
