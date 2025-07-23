@@ -68,10 +68,9 @@ in
     perSystem =
       { pkgs, ... }:
       {
-        legacyPackages._internal.ci = {
-          build = pkgs.callPackage ./build.nix { };
-          check = pkgs.callPackage ./check.nix { };
-          eval = pkgs.callPackage ./eval.nix { };
+        legacyPackages._internal.ci = lib.packagesFromDirectoryRecursive {
+          inherit (pkgs) callPackage;
+          directory = ./tools;
         };
       };
   };
