@@ -7,6 +7,8 @@
     inputs.treefmt-nix.flakeModule
     inputs.git-hooks-nix.flakeModule
     inputs.make-shell.flakeModules.default
+    inputs.files.flakeModules.default
+    ./files
   ];
   perSystem =
     {
@@ -30,8 +32,18 @@
           };
         };
       };
-      pre-commit.settings.hooks.treefmt = {
-        enable = true;
+      pre-commit.settings.hooks = {
+        treefmt.enable = true;
+        files =
+          let
+            writerCfg = config.files.writer;
+            writerPkg = writerCfg.drv;
+          in
+          {
+            enable = true;
+            package = writerPkg;
+            entry = "${writerPkg}/bin/${writerCfg.exeFilename}";
+          };
       };
       make-shells = {
         default = {
