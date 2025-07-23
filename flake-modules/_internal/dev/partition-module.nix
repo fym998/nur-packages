@@ -47,35 +47,33 @@
             };
         };
       };
-      make-shells = {
-        default = {
-          imports =
-            builtins.map
-              (
-                shellModule:
-                builtins.intersectAttrs (lib.genAttrs [
-                  "buildInputs"
-                  "nativeBuildInputs"
-                  "propagatedBuildInputs"
-                  "propagatedNativeBuildInputs"
-                  "shellHook"
-                ] (_: null)) shellModule
-              )
-              [
-                config.treefmt.build.devShell
-                config.pre-commit.devShell
-              ];
-          nativeBuildInputs = builtins.attrValues {
-            inherit (pkgs)
-              nil
-              nix-prefetch-git
-              nix-fast-build
-              nix-eval-jobs
+      make-shells.default = {
+        imports =
+          builtins.map
+            (
+              shellModule:
+              builtins.intersectAttrs (lib.genAttrs [
+                "buildInputs"
+                "nativeBuildInputs"
+                "propagatedBuildInputs"
+                "propagatedNativeBuildInputs"
+                "shellHook"
+              ] (_: null)) shellModule
+            )
+            [
+              config.treefmt.build.devShell
+              config.pre-commit.devShell
+            ];
+        nativeBuildInputs = builtins.attrValues {
+          inherit (pkgs)
+            nil
+            nix-prefetch-git
+            nix-fast-build
+            nix-eval-jobs
 
-              yaml2json
-              jq
-              ;
-          };
+            yaml2json
+            jq
+            ;
         };
       };
     };
