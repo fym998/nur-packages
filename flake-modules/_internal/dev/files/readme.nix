@@ -28,7 +28,7 @@
                 let
                   contents = map (c: c.mkContent package) columns;
                 in
-                " | ${lib.concatStringsSep " | " contents} |";
+                "| ${lib.concatStringsSep " | " contents} |";
 
               tableRows = map mkTableRow (builtins.attrValues self'.packages);
 
