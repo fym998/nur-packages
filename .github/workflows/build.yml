@@ -6,9 +6,9 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**/_internal/**'
       - .github/**
       - .vscode/**
+      - flake-modules/_internal/dev/**
       - LICENSE
       - '*.md'
       - '*.json'
