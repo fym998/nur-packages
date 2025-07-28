@@ -23,3 +23,8 @@ jobs:
           flakes: |
             .
             flake-modules/_internal/dev
+      - uses: fym998/update-flake-lock@main
+      - name: Enable Pull Request Automerge
+        run: gh pr merge --merge --auto "1"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
