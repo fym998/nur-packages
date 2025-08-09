@@ -18,7 +18,18 @@
               };
 
               columns = [
-                (nameMkContentPair "Name" (p: p.pname or p.name))
+                (nameMkContentPair "Name" (
+                  p:
+                  "[${p.pname or p.name}](${
+                    builtins.replaceStrings
+                      [
+                        (toString ../../../../. + "/")
+                        ":"
+                      ]
+                      [ "" "#L" ]
+                      p.meta.position
+                  })"
+                ))
                 (nameMkContentPair "Description" (p: p.meta.description or ""))
                 (nameMkContentPair "Version" (p: p.version or ""))
                 (nameMkContentPair "Homepage" (p: if p ? meta.homepage then "[Link](${p.meta.homepage})" else ""))
