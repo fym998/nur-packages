@@ -13,5 +13,6 @@
 | fprintd-fpcmoh | Fingerprint daemon for FPC match on host device | 1.94.4 | [Link](https://fprint.freedesktop.org/) |
 | glfw3-minecraft | Multi-platform library for creating OpenGL contexts and managing input, including keyboard, mouse, joystick and time with patches for Minecraft on wayland | 3.4 | [Link](https://aur.archlinux.org/packages/glfw-wayland-minecraft-cursorfix) |
 | libfprint-fpcmoh | libfprint with proprietary FPC match on host device 10a5:9800 driver | 1.94.6 | [Link](https://aur.archlinux.org/packages/libfprint-fpcmoh-git) |
+| umu-launcher-wrapper | Wrapper for umu-launcher with `PROTONPATH` set to run Proton games |  |  |
 | wpsoffice-cn-fcitx | WPS Office CN with Fcitx support | 12.1.0.17900 | [Link](https://www.wps.com) |
 
