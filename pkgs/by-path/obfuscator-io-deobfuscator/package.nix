@@ -22,6 +22,6 @@ buildNpmPackage (finalAttrs: {
   meta = {
     description = "Obfuscator.io deobfuscator";
     homepage = "https://github.com/ben-sb/obfuscator-io-deobfuscator";
-    inherit (finalAttrs.nodejs) platforms;
+    inherit (finalAttrs.nodejs.meta) platforms;
   };
 })
