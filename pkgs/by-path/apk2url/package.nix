@@ -21,7 +21,10 @@ writeShellApplication {
     jadx
   ];
   text = "bash ${src}/apk2url.sh";
-  derivationArgs.version = "unstable-2024-02-24";
+  derivationArgs = {
+    version = "unstable-2024-02-24";
+    preferLocalBuild = true;
+  };
   meta = {
     description = "An OSINT tool to quickly extract IP and URL endpoints from APKs by disassembling and decompiling";
     homepage = "https://github.com/n0mi1k/apk2url";
