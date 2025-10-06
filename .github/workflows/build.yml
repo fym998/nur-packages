@@ -57,7 +57,7 @@ jobs:
         run: curl -XPOST "https://nur-update.nix-community.org/update?repo=${{ env.NUR_REPO }}"
 
       - name: Trigger NixOS config update
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.PAT }}
           repository: fym998/nixos-config
