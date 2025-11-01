@@ -68,7 +68,7 @@ in
     perSystem =
       { pkgs, ... }:
       {
-        legacyPackages._internal.ci = lib.packagesFromDirectoryRecursive {
+        legacyPackages._ci = lib.packagesFromDirectoryRecursive {
           inherit (pkgs) callPackage;
           directory = ./tools;
         };
