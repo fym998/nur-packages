@@ -340,6 +340,33 @@ async def check_changes(
             # update.nix is always passing oldVersion
             changes[0]["oldVersion"] = package["oldVersion"]
 
+            # === 新增：触发 README 生成 ===
+        # 假设生成脚本是 ./maintainers/scripts/update-readme.sh 或类似
+        # 你可以根据项目约定调整路径
+        try:
+            currentSystem = await check_subprocess_output(
+                "nix",
+                "eval",
+                "--raw",
+                "--impure",
+                "builtins.currentSystem",
+                cwd=worktree,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.DEVNULL,
+            )
+            await check_subprocess_output(
+                "nix",
+                "run",
+                f".#files.{currentSystem.decode('utf-8').strip()}.writer.drv",
+                currentSystem.decode("utf-8").strip(),
+                cwd=worktree,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+        except CalledProcessError:
+            # 可选：忽略失败，或警告
+            eprint(f" - {package['name']}: WARNING: README generation failed")
+
         if "newVersion" not in changes[0]:
             attr_path = changes[0]["attrPath"]
             obtain_new_version_output = await check_subprocess_output(
