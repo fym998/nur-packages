@@ -34,7 +34,7 @@ in
         ...
       }:
       {
-        _file = ./ci.nix;
+        _file = ./default.nix;
         options = {
           ciPackages = mkOption {
             type = types.lazyAttrsOf types.package;
