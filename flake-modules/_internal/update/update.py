@@ -245,7 +245,7 @@ async def run_update_script(
             stderr=asyncio.subprocess.PIPE,
             cwd=worktree,
         )
-        await merge_changes(merge_lock, package, update_info, temp_dir)
+        await merge_changes(merge_lock, package, update_info, nixpkgs_root, temp_dir)
     except KeyboardInterrupt as e:
         eprint("Cancelling…")
         raise asyncio.exceptions.CancelledError()
@@ -291,25 +291,32 @@ async def commit_changes(
     worktree: str,
     branch: str,
     changes: list[dict],
+    main_repo: str,  # ← 新增：主仓库路径
 ) -> None:
     for change in changes:
-        # Git can only handle a single index operation at a time
+        # 在 worktree 中提交
+        await check_subprocess_output("git", "add", *change["files"], cwd=worktree)
+        commit_message = "{attrPath}: {oldVersion} -> {newVersion}".format(**change)
+        if "commitMessage" in change:
+            commit_message = change["commitMessage"]
+        elif "commitBody" in change:
+            commit_message += "\n\n" + change["commitBody"]
+        await check_subprocess_output(
+            "git", "commit", "--quiet", "-m", commit_message, cwd=worktree
+        )
+
+        # 获取刚提交的 commit hash
+        commit_hash = (
+            (await check_subprocess_output("git", "rev-parse", "HEAD", cwd=worktree))
+            .decode()
+            .strip()
+        )
+
+        # 在主仓库中 cherry-pick（加锁！）
         async with merge_lock:
-            await check_subprocess_output("git", "add", *change["files"], cwd=worktree)
-            commit_message = "{attrPath}: {oldVersion} -> {newVersion}".format(**change)
-            if "commitMessage" in change:
-                commit_message = change["commitMessage"]
-            elif "commitBody" in change:
-                commit_message = commit_message + "\n\n" + change["commitBody"]
             await check_subprocess_output(
-                "git",
-                "commit",
-                "--quiet",
-                "-m",
-                commit_message,
-                cwd=worktree,
+                "git", "cherry-pick", commit_hash, cwd=main_repo
             )
-            await check_subprocess_output("git", "cherry-pick", branch)
 
 
 async def check_changes(
@@ -370,6 +377,7 @@ async def merge_changes(
     merge_lock: asyncio.Lock,
     package: dict,
     update_info: bytes,
+    nixpkgs_root: str,
     temp_dir: tuple[str, str] | None,
 ) -> None:
     if temp_dir is not None:
@@ -377,7 +385,9 @@ async def merge_changes(
         changes = await check_changes(package, worktree, update_info)
 
         if len(changes) > 0:
-            await commit_changes(package["name"], merge_lock, worktree, branch, changes)
+            await commit_changes(
+                package["name"], merge_lock, worktree, branch, changes, nixpkgs_root
+            )
         else:
             eprint(f" - {package['name']}: DONE, no changes.")
     else:
