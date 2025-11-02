@@ -239,6 +239,7 @@ async def run_update_script(
             # Run all update scripts in the Nixpkgs development shell to get access to formatters and co.
             "nix",
             "develop",
+            "--quiet",
             "--command",
             " ".join([shlex.quote(s) for s in update_script_command]),
             stdout=asyncio.subprocess.PIPE,
