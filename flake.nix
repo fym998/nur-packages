@@ -73,7 +73,10 @@
                       ${lib.concatStringsSep separator path} = value;
                     }
                   else if lib.isAttrs value then
-                    lib.concatMapAttrs (name: flattenPkgs separator (path ++ [ name ])) value
+                    lib.concatMapAttrs (
+                      # skip private attributes starting with "_"
+                      name: if lib.hasPrefix "_" name then _: { } else flattenPkgs separator (path ++ [ name ])
+                    ) value
                   else
                     # Ignore the functions which makeScope returns
                     { };
