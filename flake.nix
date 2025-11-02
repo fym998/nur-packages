@@ -41,6 +41,7 @@
         imports = [
           ./flake-modules/_internal/dev
           ./flake-modules/_internal/ci
+          ./flake-modules/_internal/update
         ];
         flake.overlays = import ./overlays;
         systems = import inputs.systems;
@@ -60,6 +61,7 @@
               };
             };
             ciPackages = lib.filterAttrs (name: _p: !lib.hasPrefix "_" name) self'.packages;
+            update.packages = self'.packages;
           }
           // import ./pkgs { inherit pkgs; };
       }
