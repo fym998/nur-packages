@@ -131,10 +131,6 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "hmcl";
     sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];
     license = lib.licenses.gpl3Only;
-    maintainers = with lib.maintainers; [
-      daru-san
-      moraxyc
-    ];
     inherit (hmclJdk.meta) platforms;
   };
 })
