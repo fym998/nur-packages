@@ -336,11 +336,9 @@ async def check_changes(
         if "newVersion" not in changes[0]:
             attr_path = changes[0]["attrPath"]
             obtain_new_version_output = await check_subprocess_output(
-                "nix-instantiate",
-                "--expr",
-                f"with import ./. {{}}; lib.getVersion {attr_path}",
-                "--eval",
-                "--strict",
+                "nix",
+                "eval",
+                f".#{attr_path}.version",
                 "--json",
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
