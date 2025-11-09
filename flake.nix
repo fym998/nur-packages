@@ -85,7 +85,10 @@
 
             ciPackages = self'.legacyPackages;
 
-            update.packages = self'.packages;
+            update = {
+              inherit (self') packages;
+              nixpkgsPath = inputs.nixpkgs.outPath;
+            };
           };
       }
     );
