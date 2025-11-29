@@ -8,11 +8,13 @@
   imagemagick,
   jdk17,
   jdk21,
-  hmclJdk ? jdk21.override {
+  jdk,
+  hmclJdk ? jdk.override {
     enableJavaFX = true; # Necessary for hardware acceleration.
   },
   minecraftJdks ? [
     jdk17
+    jdk21
     hmclJdk
   ],
   xorg,
