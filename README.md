@@ -13,6 +13,7 @@
 | [bitsrun-rs](pkgs/by-name/bitsrun-rs/package.nix#L35) | 0.5.0 | A headless login / logout CLI for gateway (10.0.0.55) at BIT, now in Rust. 北京理工大学 10.0.0.55 校园网登录登出的 Rust 实现 | [Link](https://github.com/spencerwooo/bitsrun-rs) |
 | [bt-dualboot](pkgs/by-name/bt-dualboot.nix#L24) | 1.0.1 | User-friendly tool making your bluetooth devices working both in Windows and Linux without re-pairing chore | [Link](https://github.com/x2es/bt-dualboot) |
 | [fprintd-fpcmoh](pkgs/by-name/fprintd-fpcmoh.nix#L21) | 1.94.4 | Fingerprint daemon for FPC match on host device | [Link](https://fprint.freedesktop.org/) |
+| [git-credential-libsecret](pkgs/by-name/git-credential-libsecret.nix#L40) | 2.51.0 | Git credential helper using libsecret | [Link](https://git-scm.com/) |
 | [glfw3-minecraft](pkgs/by-name/glfw3-minecraft.nix#L25) | 3.4 | GLFW 3 with patches for Minecraft on wayland | [Link](https://aur.archlinux.org/packages/glfw-wayland-minecraft-cursorfix) |
 | [hmcl](pkgs/by-name/hmcl/package.nix#L125) | 3.7.3 | Minecraft Launcher which is multi-functional, cross-platform and popular | [Link](https://hmcl.huangyuhui.net) |
 | [libfprint-fpcmoh](pkgs/by-name/libfprint-fpcmoh.nix#L47) | 1.94.6 | libfprint with proprietary FPC match on host device 10a5:9800 driver | [Link](https://aur.archlinux.org/packages/libfprint-fpcmoh-git) |
