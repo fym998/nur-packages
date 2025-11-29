@@ -18,7 +18,7 @@
   xorg,
   glib,
   libGL,
-  glfw-minecraft ? callPackage ../glfw3-minecraft/package.nix { },
+  glfw-minecraft ? callPackage ../glfw3-minecraft.nix { },
   openal,
   libglvnd,
   alsa-lib,
