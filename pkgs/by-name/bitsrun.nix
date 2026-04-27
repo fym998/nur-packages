@@ -14,6 +14,7 @@ buildPythonApplication (finalAttrs: {
   build-system = [ setuptools ];
   dependencies = [
     httpx
+    socksio
     rich
     humanize
     click
